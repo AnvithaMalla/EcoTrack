@@ -50,15 +50,25 @@ def create_app(test_config: dict | None = None) -> Flask:
     return app
 
 
-if not firebase_admin._apps:
-    service_account_path = os.path.join(
-        os.path.dirname(__file__),
-        "firebase",
-        "serviceAccountKey.json"
-    )
+import json
 
-    cred = credentials.Certificate(service_account_path)
-    firebase_admin.initialize_app(cred)
+config = Config()
+
+if not firebase_admin._apps:
+    cred = credentials.Certificate({
+        "type": "service_account",
+        "project_id": config.firebase_project_id,
+        "private_key": config.firebase_private_key,
+        "client_email": config.firebase_client_email,
+        "token_uri": "https://oauth2.googleapis.com/token"
+    })
+
+    firebase_admin.initialize_app(
+        cred,
+        {
+            "databaseURL": config.firebase_database_url
+        }
+    )
 app = create_app()
 
 
