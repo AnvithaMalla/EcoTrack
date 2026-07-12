@@ -66,6 +66,8 @@ export default function DashboardPage() {
   const budget = Number(data.profile.daily_budget || 7);
   const budgetUsed = Math.min(100, (totalEmission / budget) * 100);
   const equivalents = equivalentMetrics(totalEmission);
+  
+  console.log("Dashboard data:", data);
 
   return (
     <AppShell>
