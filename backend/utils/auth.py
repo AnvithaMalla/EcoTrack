@@ -44,13 +44,18 @@ def resolve_current_user() -> dict[str, Any]:
     raise PermissionError('Authentication required')
 
 
-def require_auth(view: Callable) -> Callable:
+def require_auth(view):
     @wraps(view)
     def wrapped(*args, **kwargs):
+        # Allow CORS preflight requests
+        if request.method == "OPTIONS":
+            return "", 204
+
         try:
             resolve_current_user()
         except Exception as exc:
-            return jsonify({'error': str(exc)}), 401
+            return jsonify({"error": str(exc)}), 401
+
         return view(*args, **kwargs)
 
     return wrapped

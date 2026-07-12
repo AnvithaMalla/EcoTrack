@@ -9,7 +9,7 @@ from backend.utils.auth import resolve_current_user, require_auth
 dashboard_bp = Blueprint('dashboard', __name__, url_prefix='/api')
 
 
-@dashboard_bp.get('/dashboard')
+@dashboard_bp.route("/dashboard", methods=["GET", "OPTIONS"])
 @require_auth
 def dashboard():
     user = resolve_current_user()

@@ -10,7 +10,7 @@ load_dotenv()
 @dataclass(frozen=True)
 class Config:
     secret_key: str = os.getenv('SECRET_KEY', 'dev-secret-key')
-    frontend_origin: str = os.getenv('FRONTEND_ORIGIN', 'http://localhost:5173')
+    frontend_origin: str = os.getenv('FRONTEND_ORIGIN', 'https://ecotrack-frontend-7uil.onrender.com')
     port: int = int(os.getenv('PORT', '5000'))
     carbon_interface_api_key: str = os.getenv('CARBON_INTERFACE_API_KEY', '')
     carbon_interface_base_url: str = os.getenv('CARBON_INTERFACE_BASE_URL', 'https://www.carboninterface.com/api/v1')
